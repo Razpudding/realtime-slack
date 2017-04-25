@@ -16,7 +16,7 @@ router.get('/', function(request, response){
 		//TODO: actually serve /main to the client. I guess I need next() for this
 	}
 	else {
-		response.send('<p>Please click the button below to allow this app to access your Slack account</p><a href="https://slack.com/oauth/authorize?scope='+ permissions +'&client_id=13771535971.158078595415"><img alt="Add to Slack" height="40" width="139" src="https://platform.slack-edge.com/img/add_to_slack.png" srcset="https://platform.slack-edge.com/img/add_to_slack.png 1x, https://platform.slack-edge.com/img/add_to_slack@2x.png 2x" /></a>');
+		response.send('<p>Please click the button below to allow this app to access your Slack account</p><a href="https://slack.com/oauth/authorize?scope='+ permissions +'&client_id=' +process.env.SLACK_CLIENT_ID + '"><img alt="Add to Slack" height="40" width="139" src="https://platform.slack-edge.com/img/add_to_slack.png" srcset="https://platform.slack-edge.com/img/add_to_slack.png 1x, https://platform.slack-edge.com/img/add_to_slack@2x.png 2x" /></a>');
 	}
 });
 
@@ -25,8 +25,8 @@ router.get('/oauth', function (request, response){
 	rp({													
 		uri: 'https://slack.com/api/oauth.access',
 		qs: {
-			client_id: request.app.slack_client_id,
-			client_secret: request.app.slack_client_secret,
+			client_id: process.env.SLACK_CLIENT_ID,
+			client_secret: process.env.SLACK_CLIENT_SECRET,
 			code: request.query.code,
 			redirect_uri : 'http://localhost:3100/oauth'
 		}

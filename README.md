@@ -4,7 +4,7 @@ A realtime Slack app serving as an example of how to use socket connections to a
 ## Usage
 You probably shouldn't install this app on a server right now as it will basically ask the first user for their slack credentials and then use that to steal all their messages and display them to anyone else using that instance of this app. unintended feature :speak_no_evil:
 
-If you do want to run this application, download the files to a folder, run npm install, put your SLACK_CLIENT_ID en SLACK_CLIENT_SECRET in a .env file in the root of the folder and then run npm start in your terminal. The app should now be hosted at http://localhost:3100/ (you can change the port in the index.js file)
+If you do want to run this application, download the files to a folder, run npm install, put your SLACK_CLIENT_ID and SLACK_CLIENT_SECRET in a .env file in the root of the folder and then run npm start in your terminal. The app should now be hosted at http://localhost:3100/ (you can change the port in the index.js file)
 
 Features:
 * Oauth grant flow allowing a user to connect this app to their Slack account (and read/write messages to their channels)

@@ -30,9 +30,9 @@
     "request": "^2.81.0",
     "request-promise": "^4.2.0",
     "socket.io": "^1.7.3",
-    "ws": "^2.2.2"
+    "ws": "^2.2.2",
+    "debug-http": "^1.1.0"
   },
   "devDependencies": {
-    "debug-http": "^1.1.0"
   }
 }

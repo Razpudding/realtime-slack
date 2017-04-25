@@ -1,34 +1,35 @@
 /* jslint console:true, devel:true, eqeq:true, plusplus:true, sloppy:true, vars: true, white:true, esversion:5 */
 
-//PACKAGES
 //Separate your requires from your initialization so as to not get confused about order of execution
 //The order of requires doesn't matter
 var dotenv = require('dotenv');
 var express = require('express');
-var app = express(); //TODO: move to config
 var WebSocket = require('ws');
 var http = require('http');
 var debugHttp = require('debug-http');	
-var rp = require('request-promise'); //A promise wrapper for the HTTP request module
+var rp = require('request-promise');//A promise wrapper for the HTTP request module
 var socketio = require('socket.io');
 var router = require("./router");
 
-//CONFIGURATION
+//Set up environment vars
+dotenv.config();
+//Set up http debugging
+debugHttp();
+
+//Set up an express and socketio server
 //The order of initializations DOES matter. Think about what needs to be initialized first
 //Which packages depend on instances of other packages? Which configurations are most crucial?
-dotenv.config();
+var app = express();
 var server = http.Server(app);
 var io = socketio(server);
+//Configure the express app to use the router file
+app.use('/', router);
+//Set the port the app will run on
 var port = 3100;
-debugHttp();
-app.use('/', router);	
-app.slack_client_id = process.env.SLACK_CLIENT_ID;
-app.slack_client_secret = process.env.SLACK_CLIENT_SECRET;
-console.log("Raising Server from the dead");
-console.log("---" + "\n" + "Running app with Slack key: " + app.slack_client_id);
 //A simple data structure keeping track of all our messages. This is essentially a database with the timestamp of each message being the primary key
 var treeData = {};
 
+console.log("Raising Server from the dead");
 
 //Function that sets up the websocket connection, TODO: refactor this
 app.connectRealtime = function(){
@@ -81,7 +82,6 @@ io.on('connection', function (socket) {
 
 });
 
-//TODO: change following line to http. to have the socket server run
 server.listen(3100, function(err){
 	console.log(err || "Hi this is express, and I'm node, and you're listening to clean-node on " + port);	
 });
