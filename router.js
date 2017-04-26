@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var rp = require('request-promise'); //A promise wrapper for the HTTP request module
-
+var socketHandler = require('./socketHandler.js');
 module.exports = router;
 
 // Listening to requests at the root of the web app
@@ -51,8 +51,7 @@ router.get('/main', function(request, response, next){
 		.then( function (data){
 			data = JSON.parse(data);
 			//console.log(data.url);
-			request.app.realtimeEndpoint = data.url;
-			request.app.connectRealtime();
+			socketHandler.connectRealtime(request.app, data.url);
 			next();
 		});
 	}
