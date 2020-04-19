@@ -33,6 +33,5 @@
     "ws": "^2.2.2",
     "debug-http": "^1.1.0"
   },
-  "devDependencies": {
-  }
+  "devDependencies": {}
 }

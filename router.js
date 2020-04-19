@@ -21,18 +21,19 @@ router.get('/', function(request, response){
 });
 
 router.get('/oauth', function (request, response){
-	//console.log(request.query.code);
+	console.log(request.query.code);
 	rp({													
 		uri: 'https://slack.com/api/oauth.access',
 		qs: {
 			client_id: process.env.SLACK_CLIENT_ID,
 			client_secret: process.env.SLACK_CLIENT_SECRET,
 			code: request.query.code,
-			redirect_uri : 'http://localhost:3100/oauth'
+			redirect_uri : 'https://localhost:3100/oauth'
 		}
 	})
 	.then( function (data){
 		data = JSON.parse(data);
+		console.log(data)
 		request.app.accessToken = data.access_token;
 		//console.log(app.accessToken);
 		response.send('<p>Authorization complete! Click <a href = "/main">here </a> to return to the main page</p>');

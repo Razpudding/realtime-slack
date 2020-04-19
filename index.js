@@ -2,14 +2,21 @@
 
 //Separate your requires from your initialization so as to not get confused about order of execution
 //The order of requires doesn't matter
+var fs = require('fs');
 var dotenv = require('dotenv');
 var express = require('express');
 var WebSocket = require('ws');
 var http = require('http');
+var https = require('https');
 var debugHttp = require('debug-http');	
 var rp = require('request-promise');//A promise wrapper for the HTTP request module
 var socketio = require('socket.io');
+
 var router = require("./router");
+
+var privateKey  = fs.readFileSync('ssl/server.key', 'utf8');
+var certificate = fs.readFileSync('ssl/server.crt', 'utf8');
+var credentials = {key: privateKey, cert: certificate};
 
 //Set up environment vars
 dotenv.config();
@@ -20,7 +27,8 @@ debugHttp();
 //The order of initializations DOES matter. Think about what needs to be initialized first
 //Which packages depend on instances of other packages? Which configurations are most crucial?
 var app = express();
-var server = http.Server(app);
+var server = https.createServer(credentials, app);
+//var server = http.Server(app);
 var io = socketio(server);
 //Configure the express app to use the router file
 app.use('/', router);

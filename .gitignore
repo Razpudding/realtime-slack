@@ -5,7 +5,15 @@ npm-debug.log*
 
 # Environment
 *.env
-.env
+
+# Security
+*.key
+*.pem
+*.cnf
+*.ext
+*.srl
+*.crt
+*.csr
 
 # Runtime data
 pids
